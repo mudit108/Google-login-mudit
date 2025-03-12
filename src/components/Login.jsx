@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { handleAuthError, useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { UserPlus } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { LogIn } from "lucide-react";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState(false);
-  const { Login } = useAuth;
-
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -19,54 +17,65 @@ function Login() {
     try {
       setError("");
       setLoading(true);
-      await Login(email, password);
+      await login(email, password);
       navigate("/dashboard");
     } catch (error) {
       setError(handleAuthError(error));
-      alert(error);
     }
     setLoading(false);
   }
 
   return (
-    <div>
-      <div>Login</div>
-      <UserPlus size={32} />
-      {error && <div>{error}</div>}
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email-address">Email address </label>
-          <input
-            id="email-address"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
+        <div className="text-center mb-3">
+          <LogIn size={40} />
+          <h2 className="mt-2">Login</h2>
+          <p>
+            <Link to="/signup">Signup to create an account</Link>
+          </p>
         </div>
-        <div>
-          <label htmlFor="password">Password </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            required
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Creating account" : "Login"}
-          </button>
-        </div>
-      </form>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email-address" className="form-label">
+              Email Address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email-address"
+              required
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              required
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="d-grid gap-2">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

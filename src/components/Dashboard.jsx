@@ -17,15 +17,18 @@ function Dashboard() {
   }
 
   return (
-    <div>
-      <h1>My Website</h1>
-
-      <LogOut size={32} />
-      <button onClick={handleLogout}>Logout</button>
-
-      <User size={48} />
-      <div>
-        <p>{currentUser?.email}</p>
+    <div className="container mt-5">
+      <div className="card p-4 shadow-lg">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h2 className="mb-0">Dashboard</h2>
+          <button className="btn btn-danger" onClick={handleLogout}>
+            <LogOut size={20} className="me-2" /> Logout
+          </button>
+        </div>
+        <div className="text-center">
+          <User size={80} className="text-primary" />
+          <h4 className="mt-3">Welcome, {currentUser?.email}</h4>
+        </div>
       </div>
     </div>
   );
