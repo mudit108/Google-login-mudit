@@ -29,9 +29,9 @@ function Login() {
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
         <div className="text-center mb-3">
-          <LogIn size={40} />
-          <h2 className="mt-2">Login</h2>
-          <p>
+          {/* <LogIn size={40} /> */}
+          <h2 className="mt-2 display-4">Login</h2>
+          <p className="font-decoration-underline">
             <Link to="/signup">Signup to create an account</Link>
           </p>
         </div>
